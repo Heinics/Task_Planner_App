@@ -1,0 +1,64 @@
+<ion-header class="plain">
+  <ion-toolbar>
+    <ion-title>Calendar</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="app">
+  <div class="page-pad">
+    <section class="card cal">
+      <div class="month-bar">
+        <ion-button fill="clear" (click)="shift(-1)" aria-label="Previous month">
+          <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+        </ion-button>
+        <strong>{{ monthLabel() }}</strong>
+        <ion-button fill="clear" (click)="shift(1)" aria-label="Next month">
+          <ion-icon slot="icon-only" name="chevron-forward"></ion-icon>
+        </ion-button>
+      </div>
+
+      <div class="grid head">
+        @for (w of weekdays; track w) { <span>{{ w }}</span> }
+      </div>
+      <div class="grid">
+        @for (c of cells(); track $index) {
+          @if (c) {
+            <button type="button" class="day" [class.today]="c.today" [class.sel]="c.iso === selected()"
+                    (click)="select(c.iso)">
+              <span class="n">{{ c.day }}</span>
+              <span class="dots">
+                @if (c.hasTasks) { <i class="dot blue"></i> }
+                @if (c.hasOverdue) { <i class="dot red"></i> }
+              </span>
+            </button>
+          } @else {
+            <span></span>
+          }
+        }
+      </div>
+
+      <div class="legend muted">
+        <span><i class="dot blue"></i> Has tasks</span>
+        <span><i class="dot red"></i> Overdue</span>
+      </div>
+    </section>
+
+    <section class="selected">
+      <div class="sel-head">
+        <div>
+          <div class="eyebrow-label">Tasks on Selected Date</div>
+          <strong>{{ selectedLabel() }}</strong>
+        </div>
+        <ion-button size="small" (click)="addOnSelected()">
+          <ion-icon slot="start" name="add"></ion-icon>Add
+        </ion-button>
+      </div>
+
+      @for (t of selectedTasks(); track t.id) {
+        <app-task-card [task]="t" [timeOnly]="true"></app-task-card>
+      } @empty {
+        <p class="muted none">No tasks on this date.</p>
+      }
+    </section>
+  </div>
+</ion-content>

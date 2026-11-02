@@ -1,0 +1,17 @@
+.form { gap: 14px; padding-bottom: 32px; }
+
+.group { padding: 14px 16px; }
+.row { display: flex; align-items: center; justify-content: space-between; min-height: 44px; }
+.row + .row { border-top: 1px solid var(--app-line); }
+.label { font-size: 15px; font-weight: 500; }
+.gap { margin-top: 16px; }
+
+.chips { display: flex; gap: 8px; margin-top: 8px; }
+.chip {
+  flex: 1; padding: 10px 0; border-radius: 12px; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+  border: 1px solid var(--ion-color-step-300, #c9cde0); background: transparent; color: var(--app-text);
+  &.on { background: var(--ion-color-primary); border-color: var(--ion-color-primary); color: #fff; }
+  &.high.on { background: var(--priority-high); border-color: var(--priority-high); }
+  &.medium.on { background: var(--priority-medium); border-color: var(--priority-medium); }
+  &.low.on { background: var(--priority-low); border-color: var(--priority-low); }
+}

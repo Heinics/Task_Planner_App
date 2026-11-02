@@ -1,0 +1,37 @@
+<ion-header class="plain">
+  <ion-toolbar>
+    <ion-title>Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="app">
+  <div class="page-pad">
+    <section class="card who">
+      <span class="avatar">{{ initial() }}</span>
+      <div>
+        <strong>{{ svc.profile().name }}</strong>
+        <div class="muted small">{{ svc.profile().email || 'No email set' }}</div>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="card stat"><span class="num">{{ svc.tasks().length }}</span><span class="muted">Tasks</span></div>
+      <div class="card stat"><span class="num ok">{{ svc.completedCount() }}</span><span class="muted">Done</span></div>
+      <div class="card stat"><span class="num late">{{ svc.overdueCount() }}</span><span class="muted">Overdue</span></div>
+    </section>
+
+    <section class="card block">
+      <div class="eyebrow-label">Your details</div>
+      <ion-input class="field" fill="outline" label="Name" labelPlacement="stacked" [(ngModel)]="form.name"></ion-input>
+      <ion-input class="field" fill="outline" label="Email" labelPlacement="stacked" type="email" [(ngModel)]="form.email"></ion-input>
+      <ion-button expand="block" (click)="save()">Save Profile</ion-button>
+    </section>
+
+    <section class="card block">
+      <div class="eyebrow-label">Data</div>
+      <p class="muted small">Tasks are stored on this device only.</p>
+      <ion-button expand="block" fill="outline" (click)="loadSample()">Load sample data</ion-button>
+      <ion-button expand="block" fill="outline" color="danger" (click)="clearAll()">Delete all tasks</ion-button>
+    </section>
+  </div>
+</ion-content>

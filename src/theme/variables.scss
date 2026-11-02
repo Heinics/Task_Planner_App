@@ -1,52 +1,50 @@
-// CHIA palette (from the product design)
-:root {
-  --ion-font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+// TaskPlanner theme: blue primary, orange accent, light gray surfaces.
+// For information on how to create your own theme, please refer to:
+// https://ionicframework.com/docs/theming/
 
-  // Primary: blue #165DFF
+:root {
+  --ion-font-family: 'Poppins', -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
   --ion-color-primary: #165dff;
   --ion-color-primary-rgb: 22, 93, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
   --ion-color-primary-shade: #1352e0;
-  --ion-color-primary-tint: #2d6eff;
+  --ion-color-primary-tint: #2d6dff;
 
-  // Secondary: amber, used for the add button and "pending" accents
-  --ion-color-secondary: #ffab00;
-  --ion-color-secondary-rgb: 255, 171, 0;
-  --ion-color-secondary-contrast: #1f1300;
-  --ion-color-secondary-contrast-rgb: 31, 19, 0;
-  --ion-color-secondary-shade: #e09600;
-  --ion-color-secondary-tint: #ffb41a;
+  --ion-color-secondary: #ff9500;
+  --ion-color-secondary-rgb: 255, 149, 0;
+  --ion-color-secondary-contrast: #1f1100;
+  --ion-color-secondary-contrast-rgb: 31, 17, 0;
+  --ion-color-secondary-shade: #e08300;
+  --ion-color-secondary-tint: #ff9f1a;
 
-  // Success: green #36D399 (completed)
-  --ion-color-success: #36d399;
-  --ion-color-success-rgb: 54, 211, 153;
-  --ion-color-success-contrast: #04261a;
-  --ion-color-success-contrast-rgb: 4, 38, 26;
-  --ion-color-success-shade: #30ba87;
-  --ion-color-success-tint: #4adaa4;
+  --app-bg: #f5f6f9;
+  --app-card: #ffffff;
+  --app-text: #1f2430;
+  --app-muted: #6b7280;
+  --app-line: #eceef3;
 
-  // Warning: yellow #FFAB00 (pending)
-  --ion-color-warning: #ffab00;
-  --ion-color-warning-rgb: 255, 171, 0;
-  --ion-color-warning-contrast: #1f1300;
-  --ion-color-warning-contrast-rgb: 31, 19, 0;
-  --ion-color-warning-shade: #e09600;
-  --ion-color-warning-tint: #ffb41a;
+  --priority-high: #e5484d;
+  --priority-medium: #ff9500;
+  --priority-low: #16a34a;
 
-  // Danger: red #F87272 (critical / error)
-  --ion-color-danger: #f87272;
-  --ion-color-danger-rgb: 248, 114, 114;
-  --ion-color-danger-contrast: #2a0505;
-  --ion-color-danger-contrast-rgb: 42, 5, 5;
-  --ion-color-danger-shade: #da6565;
-  --ion-color-danger-tint: #f98181;
+  --ion-text-color: var(--app-text);
+  --ion-text-color-rgb: 31, 36, 48;
+  --ion-background-color: #ffffff;
+  --ion-background-color-rgb: 255, 255, 255;
+}
 
-  // Medium: gray #6B7280 (secondary text)
-  --ion-color-medium: #6b7280;
-  --ion-color-medium-rgb: 107, 114, 128;
-  --ion-color-medium-contrast: #ffffff;
-  --ion-color-medium-contrast-rgb: 255, 255, 255;
-  --ion-color-medium-shade: #5e646f;
-  --ion-color-medium-tint: #7a808d;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --app-bg: #0f1218;
+    --app-card: #181c25;
+    --app-text: #eef0f5;
+    --app-muted: #9aa3b2;
+    --app-line: #272c38;
+    --ion-text-color: var(--app-text);
+    --ion-text-color-rgb: 238, 240, 245;
+    --ion-background-color: #0f1218;
+    --ion-background-color-rgb: 15, 18, 24;
+  }
 }

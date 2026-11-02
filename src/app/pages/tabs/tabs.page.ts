@@ -1,21 +1,18 @@
-import { Component, inject } from '@angular/core';
-import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonBadge } from '@ionic/angular';
+import { Component } from '@angular/core';
+import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import {
-  gridOutline, homeOutline, peopleOutline, barChartOutline, syncOutline
+  homeOutline, listOutline, calendarOutline, barChartOutline, personOutline
 } from 'ionicons/icons';
-import { HealthService } from '../../services/health.service';
 
 @Component({
   selector: 'app-tabs',
-  imports: [IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonBadge],
+  imports: [IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel],
   templateUrl: './tabs.page.html',
   styleUrl: './tabs.page.scss'
 })
 export class TabsPage {
-  readonly health = inject(HealthService);
-
   constructor() {
-    addIcons({ gridOutline, homeOutline, peopleOutline, barChartOutline, syncOutline });
+    addIcons({ homeOutline, listOutline, calendarOutline, barChartOutline, personOutline });
   }
 }

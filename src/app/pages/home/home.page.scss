@@ -1,0 +1,26 @@
+.greet {
+  h1 { margin: 4px 0 2px; font-size: 24px; font-weight: 700; letter-spacing: -0.01em; }
+  p { margin: 0; font-size: 14px; }
+}
+
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+
+.stat {
+  display: flex; flex-direction: column; gap: 2px; padding: 14px 12px; font-size: 12px;
+  .num { font-size: 28px; font-weight: 700; line-height: 1.1; }
+  .done { color: var(--priority-low); }
+  .pending { color: var(--ion-color-primary); }
+  .late { color: var(--priority-high); }
+}
+
+.progress {
+  display: flex; align-items: center; gap: 20px; padding: 18px 20px;
+  .ring { width: 112px; height: 112px; flex: none; }
+  .track { fill: none; stroke: var(--app-line); stroke-width: 10; }
+  .bar { fill: none; stroke: var(--ion-color-primary); stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset 0.5s ease; }
+  .pct { font-size: 22px; font-weight: 700; fill: var(--app-text); }
+  .big { font-size: 28px; font-weight: 700; color: var(--ion-color-primary); line-height: 1.2; }
+  .small { font-size: 13px; }
+}
+
+.actions { display: flex; flex-direction: column; gap: 4px; }

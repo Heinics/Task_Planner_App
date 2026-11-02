@@ -1,0 +1,54 @@
+<ion-header class="plain">
+  <ion-toolbar>
+    <ion-title>My Tasks</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleSearch()" aria-label="Search">
+        <ion-icon slot="icon-only" name="search-outline" [color]="searching() ? 'primary' : undefined"></ion-icon>
+      </ion-button>
+      <ion-button (click)="openFilter()" aria-label="Filter">
+        <ion-icon slot="icon-only" name="options-outline" [color]="priority() ? 'primary' : undefined"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  @if (searching()) {
+    <ion-toolbar>
+      <ion-searchbar placeholder="Search tasks" [debounce]="150" [animated]="true"
+                     (ionInput)="search($event.detail.value)"></ion-searchbar>
+    </ion-toolbar>
+  }
+  <ion-toolbar>
+    <ion-segment [value]="tab()" (ionChange)="setTab($event.detail.value)" class="tabs">
+      @for (t of tabs; track t) {
+        <ion-segment-button [value]="t"><ion-label>{{ t }}</ion-label></ion-segment-button>
+      }
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="app">
+  <div class="list">
+    @if (priority()) {
+      <div class="chip-row">
+        <span class="badge" [class]="priority()!.toLowerCase()">{{ priority() }} priority</span>
+        <ion-button size="small" fill="clear" (click)="priority.set(null)">Clear</ion-button>
+      </div>
+    }
+
+    @for (t of results(); track t.id) {
+      <app-task-card [task]="t"></app-task-card>
+    } @empty {
+      <div class="empty-state">
+        <ion-icon name="clipboard-outline"></ion-icon>
+        <h3>{{ svc.tasks().length === 0 ? 'No tasks yet' : 'No tasks found' }}</h3>
+        <p>{{ svc.tasks().length === 0 ? 'Tap Add Task to create your first one.' : 'Try another tab, filter or search.' }}</p>
+      </div>
+    }
+  </div>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button class="accent extended" (click)="add()" aria-label="Add Task">
+      <ion-icon name="add"></ion-icon>
+      <span>Add Task</span>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

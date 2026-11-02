@@ -1,0 +1,20 @@
+:host { display: block; }
+
+.task {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+
+  &.done .title { text-decoration: line-through; color: var(--app-muted); }
+  &.done .badges { opacity: 0.6; }
+}
+
+.check { padding-top: 2px; }
+ion-checkbox { --size: 22px; --border-radius: 7px; --checkbox-background-checked: var(--ion-color-primary); }
+
+.body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.title { font-size: 15px; font-weight: 600; line-height: 1.3; word-break: break-word; }
+.due { font-size: 13px; color: var(--app-muted); &.late { color: var(--priority-high); } }
+.badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }

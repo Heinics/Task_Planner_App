@@ -1,30 +1,26 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-  { path: 'login', loadComponent: () => import('./pages/login/login.page').then(m => m.LoginPage) },
   {
     path: '',
-    canActivate: [authGuard],
     loadComponent: () => import('./pages/tabs/tabs.page').then(m => m.TabsPage),
     children: [
-      { path: 'dashboard', loadComponent: () => import('./pages/dashboard/dashboard.page').then(m => m.DashboardPage) },
-      { path: 'families', loadComponent: () => import('./pages/families/families.page').then(m => m.FamiliesPage) },
-      { path: 'residents', loadComponent: () => import('./pages/residents/residents.page').then(m => m.ResidentsPage) },
+      { path: 'home', loadComponent: () => import('./pages/home/home.page').then(m => m.HomePage) },
+      { path: 'tasks', loadComponent: () => import('./pages/tasks/tasks.page').then(m => m.TasksPage) },
+      { path: 'calendar', loadComponent: () => import('./pages/calendar/calendar.page').then(m => m.CalendarPage) },
       { path: 'reports', loadComponent: () => import('./pages/reports/reports.page').then(m => m.ReportsPage) },
-      { path: 'sync', loadComponent: () => import('./pages/sync/sync.page').then(m => m.SyncPage) },
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+      { path: 'profile', loadComponent: () => import('./pages/profile/profile.page').then(m => m.ProfilePage) },
+      { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]
   },
+  // 'new' must come before ':id'
   {
-    path: 'family/:id',
-    canActivate: [authGuard],
-    loadComponent: () => import('./pages/family-detail/family-detail.page').then(m => m.FamilyDetailPage)
+    path: 'task/new',
+    loadComponent: () => import('./pages/task-form/task-form.page').then(m => m.TaskFormPage)
   },
   {
-    path: 'resident/:id',
-    canActivate: [authGuard],
-    loadComponent: () => import('./pages/resident-detail/resident-detail.page').then(m => m.ResidentDetailPage)
+    path: 'task/:id',
+    loadComponent: () => import('./pages/task-form/task-form.page').then(m => m.TaskFormPage)
   },
   { path: '**', redirectTo: '' }
 ];

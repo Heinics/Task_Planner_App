@@ -1,0 +1,78 @@
+<ion-header class="plain">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tasks" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ editing() ? 'Edit Task' : 'Add New Task' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="app">
+  @if (missing()) {
+    <div class="empty-state">
+      <h3>Task not found</h3>
+      <p>It may have been deleted.</p>
+    </div>
+  } @else {
+    <div class="page-pad form">
+      <div>
+        <ion-input class="field" fill="outline" label="Task Title" labelPlacement="stacked"
+                   placeholder="e.g. Finish Capstone Documentation" [(ngModel)]="form.title" maxlength="120"></ion-input>
+        <ion-textarea class="field" fill="outline" label="Description (Optional)" labelPlacement="stacked"
+                      [autoGrow]="true" rows="3" [(ngModel)]="form.description"></ion-textarea>
+      </div>
+
+      <div class="card group">
+        <div class="row">
+          <span class="label">Due Date</span>
+          <ion-datetime-button datetime="due-date"></ion-datetime-button>
+        </div>
+        <div class="row">
+          <span class="label">Due Time</span>
+          <ion-datetime-button datetime="due-time"></ion-datetime-button>
+        </div>
+      </div>
+
+      <div class="card group">
+        <div class="eyebrow-label">Priority</div>
+        <div class="chips">
+          @for (p of priorities; track p) {
+            <button type="button" class="chip" [class]="'chip ' + p.toLowerCase()" [class.on]="form.priority === p"
+                    (click)="form.priority = p">{{ p }}</button>
+          }
+        </div>
+
+        <div class="eyebrow-label gap">Category</div>
+        <div class="chips">
+          @for (c of categories; track c) {
+            <button type="button" class="chip" [class.on]="form.category === c"
+                    (click)="form.category = c">{{ c }}</button>
+          }
+        </div>
+      </div>
+
+      <div class="card group">
+        <div class="row">
+          <span class="label">Enable Reminder</span>
+          <ion-toggle [(ngModel)]="form.reminder" aria-label="Enable Reminder"></ion-toggle>
+        </div>
+      </div>
+
+      <ion-button expand="block" size="large" (click)="save()">Save Task</ion-button>
+      @if (editing()) {
+        <ion-button expand="block" fill="outline" color="danger" (click)="remove()">Delete Task</ion-button>
+      }
+    </div>
+
+    <ion-modal [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime id="due-date" presentation="date" [(ngModel)]="form.dueDate"></ion-datetime>
+      </ng-template>
+    </ion-modal>
+    <ion-modal [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime id="due-time" presentation="time" [(ngModel)]="form.dueTime"></ion-datetime>
+      </ng-template>
+    </ion-modal>
+  }
+</ion-content>

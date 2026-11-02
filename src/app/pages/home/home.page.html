@@ -1,0 +1,69 @@
+<ion-header class="plain">
+  <ion-toolbar>
+    <span slot="start" class="brand">TaskPlanner</span>
+    <ion-buttons slot="end">
+      <ion-button (click)="openProfile()" aria-label="Profile">
+        <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="app">
+  <div class="page-pad">
+    <section class="greet">
+      <h1>{{ greeting }}, {{ name() }}!</h1>
+      <p class="muted">{{ subtitle() }}</p>
+    </section>
+
+    <section class="stats">
+      <div class="card stat">
+        <span class="num done">{{ svc.completedCount() }}</span>
+        <span class="muted">Completed</span>
+      </div>
+      <div class="card stat">
+        <span class="num pending">{{ svc.pendingCount() }}</span>
+        <span class="muted">Pending</span>
+      </div>
+      <div class="card stat">
+        <span class="num late">{{ svc.overdueCount() }}</span>
+        <span class="muted">Overdue</span>
+      </div>
+    </section>
+
+    <section class="card progress">
+      <svg viewBox="0 0 120 120" class="ring" role="img" [attr.aria-label]="'Today progress ' + svc.todayPercent() + ' percent'">
+        <circle class="track" cx="60" cy="60" [attr.r]="radius"></circle>
+        <circle class="bar" cx="60" cy="60" [attr.r]="radius"
+                [attr.stroke-dasharray]="ringLength" [attr.stroke-dashoffset]="ringOffset()"
+                transform="rotate(-90 60 60)"></circle>
+        <text x="60" y="66" text-anchor="middle" class="pct">{{ svc.todayPercent() }}%</text>
+      </svg>
+      <div class="progress-text">
+        <div class="eyebrow-label">Today's Progress</div>
+        <div class="big">{{ svc.todayPercent() }}%</div>
+        <div class="muted small">{{ svc.todayTasks().length ? 'of your tasks today are done' : 'No tasks due today' }}</div>
+      </div>
+    </section>
+
+    <section class="actions">
+      <ion-button expand="block" (click)="addTask()">
+        <ion-icon slot="start" name="add"></ion-icon>
+        Add New Task
+      </ion-button>
+      <ion-button expand="block" fill="outline" (click)="viewAll()">
+        <ion-icon slot="start" name="list-outline"></ion-icon>
+        View All Tasks
+      </ion-button>
+    </section>
+
+    @if (svc.tasks().length === 0) {
+      <div class="card empty-state">
+        <ion-icon name="checkmark-done-outline"></ion-icon>
+        <h3>Nothing planned yet</h3>
+        <p>Add your first task, or try the app with demo data.</p>
+        <ion-button fill="clear" (click)="loadSample()">Load sample data</ion-button>
+      </div>
+    }
+  </div>
+</ion-content>

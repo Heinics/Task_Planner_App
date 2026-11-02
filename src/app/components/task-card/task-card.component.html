@@ -1,0 +1,15 @@
+<div class="card task" [class.done]="task().completed" (click)="open()" role="button" tabindex="0"
+     (keydown.enter)="open()">
+  <span class="check" (click)="$event.stopPropagation()">
+    <ion-checkbox [checked]="task().completed" (ionChange)="toggle()" aria-label="Mark task complete"></ion-checkbox>
+  </span>
+  <div class="body">
+    <div class="title">{{ task().title }}</div>
+    <div class="due" [class.late]="status() === 'Overdue'">{{ due() }}</div>
+    <div class="badges">
+      <span class="badge" [class]="task().priority.toLowerCase()">{{ task().priority }}</span>
+      <span class="badge cat">{{ task().category }}</span>
+      @if (status() === 'Overdue') { <span class="badge overdue">Overdue</span> }
+    </div>
+  </div>
+</div>
