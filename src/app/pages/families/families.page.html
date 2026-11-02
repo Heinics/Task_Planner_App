@@ -1,0 +1,47 @@
+<ion-header class="hero">
+  <ion-toolbar>
+    <ion-title>Families</ion-title>
+  </ion-toolbar>
+  <ion-searchbar placeholder="Search household, name, sitio or PhilHealth" [debounce]="150"
+                 (ionInput)="search($event.detail.value)"></ion-searchbar>
+</ion-header>
+
+<ion-content class="app">
+  @if (health.families().length === 0) {
+    <div class="empty-state">
+      <ion-icon name="home-outline"></ion-icon>
+      <h3>No families yet</h3>
+      <p>Tap the + button to register the first household.</p>
+    </div>
+  } @else {
+    @if (health.barangays().length > 1) {
+      <div class="filter-row">
+        <ion-select class="field" fill="outline" label="Barangay" labelPlacement="stacked" interface="popover"
+                    [ngModel]="barangay()" (ngModelChange)="barangay.set($event)">
+          <ion-select-option value="">All barangays</ion-select-option>
+          @for (b of health.barangays(); track b) { <ion-select-option [value]="b">{{ b }}</ion-select-option> }
+        </ion-select>
+      </div>
+    }
+    <ion-list lines="none" class="list">
+      @for (f of results(); track f.id) {
+        <ion-item button detail="false" class="card" (click)="open(f.id)">
+          <span class="avatar" slot="start"><ion-icon name="home-outline"></ion-icon></span>
+          <ion-label>
+            <h2>{{ health.headName(f.id) }}</h2>
+            <p>{{ f.householdNo }} &middot; {{ f.sitio ? f.sitio + ', ' : '' }}{{ f.barangay }}</p>
+          </ion-label>
+          <span class="pill" slot="end">{{ health.membersOf(f.id).length }} members</span>
+        </ion-item>
+      } @empty {
+        <p class="none muted">No families match your search.</p>
+      }
+    </ion-list>
+  }
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button class="amber" (click)="add()" aria-label="Add family">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

@@ -1,0 +1,45 @@
+<ion-header class="hero">
+  <ion-toolbar>
+    <ion-title>Reports</ion-title>
+  </ion-toolbar>
+  <p class="sub">Barangay summary for RHU and DOH</p>
+</ion-header>
+
+<ion-content class="app">
+  <div class="page-pad">
+    <section class="card block filters">
+      <div class="eyebrow-label block-title">Filters</div>
+      <ion-input class="field" fill="outline" label="From" labelPlacement="stacked" type="date" [ngModel]="from()" (ngModelChange)="from.set($event)"></ion-input>
+      <ion-input class="field" fill="outline" label="To" labelPlacement="stacked" type="date" [ngModel]="to()" (ngModelChange)="to.set($event)"></ion-input>
+      <ion-select class="field wide" fill="outline" label="Barangay" labelPlacement="stacked" interface="popover" [ngModel]="barangay()" (ngModelChange)="barangay.set($event)">
+        <ion-select-option value="">All barangays</ion-select-option>
+        @for (b of health.barangays(); track b) { <ion-select-option [value]="b">{{ b }}</ion-select-option> }
+      </ion-select>
+      <p class="muted small wide">The date range applies to health records. Family and resident counts follow the barangay filter.</p>
+    </section>
+
+    <div class="stats">
+      <div class="card stat"><span class="num">{{ s().families }}</span><span class="muted">Families</span></div>
+      <div class="card stat"><span class="num">{{ s().residents }}</span><span class="muted">Residents</span></div>
+      <div class="card stat"><span class="num">{{ s().completedTreatment }}</span><span class="muted">Completed TB treatment</span></div>
+      <div class="card stat"><span class="num">{{ s().deceased }}</span><span class="muted">Deceased</span></div>
+    </div>
+
+    <section class="card block">
+      <div class="eyebrow-label block-title">Cases by health program</div>
+      @for (b of bars(); track b.label) {
+        <div class="bar-row">
+          <span class="lbl">{{ b.label }}</span>
+          <span class="track"><span class="fill" [style.width.%]="b.pct"></span></span>
+          <strong>{{ b.value }}</strong>
+        </div>
+      }
+      <p class="muted small">Counts are people with at least one record in the selected period (referrals count each referral).</p>
+    </section>
+
+    <ion-button expand="block" (click)="exportCsv()">
+      <ion-icon slot="start" name="download-outline"></ion-icon>
+      Export report (CSV / Excel)
+    </ion-button>
+  </div>
+</ion-content>

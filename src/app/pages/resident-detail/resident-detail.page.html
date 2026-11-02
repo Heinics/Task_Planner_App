@@ -1,0 +1,90 @@
+<ion-header class="hero">
+  <ion-toolbar>
+    <ion-buttons slot="start"><ion-back-button defaultHref="/residents" text=""></ion-back-button></ion-buttons>
+    <ion-title>Resident</ion-title>
+    @if (resident()) {
+      <ion-buttons slot="end">
+        <ion-button (click)="edit()" aria-label="Edit resident"><ion-icon slot="icon-only" name="create-outline"></ion-icon></ion-button>
+        <ion-button (click)="remove()" aria-label="Delete resident"><ion-icon slot="icon-only" name="trash"></ion-icon></ion-button>
+      </ion-buttons>
+    }
+  </ion-toolbar>
+  @if (resident(); as r) {
+    <h1 class="headline">{{ fullName(r) }}</h1>
+    <p class="sub">{{ ageOf(r.birthDate) }} yrs &middot; {{ r.gender }} &middot; {{ r.relation }}@if (r.deceased) { &middot; Deceased }</p>
+  }
+</ion-header>
+
+<ion-content class="app">
+  @if (resident(); as r) {
+    <div class="page-pad">
+      <section class="card block">
+        <div class="eyebrow-label block-title">Personal information</div>
+        <div class="kv"><span class="muted">Date of birth</span><strong>{{ r.birthDate }}</strong></div>
+        <div class="kv"><span class="muted">Contact</span><strong>{{ r.contactNumber || '—' }}</strong></div>
+        <div class="kv"><span class="muted">PhilHealth</span><strong>{{ r.philhealthNo || '—' }}</strong></div>
+        @if (family(); as f) {
+          <div class="kv"><span class="muted">Address</span><strong>{{ f.address }}, {{ f.sitio ? f.sitio + ', ' : '' }}{{ f.barangay }}</strong></div>
+          <div class="kv"><span class="muted">Household</span><strong><a (click)="openFamily()">{{ f.householdNo }} &rsaquo;</a></strong></div>
+        }
+        @if (r.deceased) {
+          <div class="kv"><span class="muted">Date of death</span><strong>{{ r.dateOfDeath }}</strong></div>
+        }
+        <ion-button expand="block" fill="clear" size="small" [color]="r.deceased ? 'primary' : 'danger'" (click)="toggleDeceased()">
+          {{ r.deceased ? 'Undo deceased status' : 'Mark as deceased' }}
+        </ion-button>
+      </section>
+
+      <section class="card block">
+        <div class="head">
+          <div class="eyebrow-label">Health records ({{ records().length }})</div>
+          <ion-button size="small" shape="round" (click)="addRecord()">+ Add record</ion-button>
+        </div>
+        <ion-list lines="none" class="list-card">
+          @for (rec of records(); track rec.id) {
+            <ion-item-sliding>
+              <ion-item button detail="false" (click)="editRecord(rec.id)">
+                <ion-icon slot="start" [name]="typeDef(rec.type).icon" color="primary"></ion-icon>
+                <ion-label>
+                  <h3>{{ typeDef(rec.type).label }} &middot; {{ rec.date }}</h3>
+                  <p>{{ summary(rec) || 'No details' }}</p>
+                </ion-label>
+                <span class="pill" slot="end"
+                      [class.ok]="rec.verified" [class.accent]="!rec.verified">{{ rec.verified ? 'Verified' : 'Unverified' }}</span>
+              </ion-item>
+              <ion-item-options side="end">
+                @if (auth.canVerify() && !rec.verified) {
+                  <ion-item-option color="success" (click)="verify(rec.id)" aria-label="Verify record">
+                    <ion-icon slot="icon-only" name="checkmark-done-outline"></ion-icon>
+                  </ion-item-option>
+                }
+                <ion-item-option color="danger" (click)="deleteRecord(rec.id)" aria-label="Delete record">
+                  <ion-icon slot="icon-only" name="trash"></ion-icon>
+                </ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+          } @empty {
+            <p class="muted none">No health records yet.</p>
+          }
+        </ion-list>
+        @if (records().length) {
+          <p class="muted small hint">Swipe a record left to {{ auth.canVerify() ? 'verify or ' : '' }}delete it. Tap to edit.</p>
+        }
+      </section>
+
+      @if (referrals().length) {
+        <section class="card block">
+          <div class="eyebrow-label block-title">Referral history</div>
+          @for (rf of referrals(); track rf.id) {
+            <div class="kv">
+              <span>{{ rf.date }} &middot; {{ rf.data['referredTo'] || 'Unspecified' }}</span>
+              <strong>{{ rf.data['status'] || 'Pending' }}</strong>
+            </div>
+          }
+        </section>
+      }
+    </div>
+  } @else {
+    <div class="empty-state"><h3>Resident not found</h3><p>They may have been deleted.</p></div>
+  }
+</ion-content>

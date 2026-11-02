@@ -1,0 +1,54 @@
+<ion-header class="hero">
+  <ion-toolbar>
+    <ion-buttons slot="start"><ion-back-button defaultHref="/families" text=""></ion-back-button></ion-buttons>
+    <ion-title>Family</ion-title>
+    @if (family()) {
+      <ion-buttons slot="end">
+        <ion-button (click)="edit()" aria-label="Edit family"><ion-icon slot="icon-only" name="create-outline"></ion-icon></ion-button>
+        <ion-button (click)="remove()" aria-label="Delete family"><ion-icon slot="icon-only" name="trash"></ion-icon></ion-button>
+      </ion-buttons>
+    }
+  </ion-toolbar>
+  @if (family(); as f) {
+    <h1 class="headline">{{ health.headName(f.id) }}</h1>
+    <p class="sub">{{ f.householdNo }} &middot; {{ f.sitio ? f.sitio + ', ' : '' }}{{ f.barangay }}</p>
+  }
+</ion-header>
+
+<ion-content class="app">
+  @if (family(); as f) {
+    <div class="page-pad">
+      <section class="card block">
+        <div class="eyebrow-label block-title">Household</div>
+        <div class="kv"><span class="muted">Address</span><strong>{{ f.address }}</strong></div>
+        <div class="kv"><span class="muted">Contact</span><strong>{{ f.contactNumber || '—' }}</strong></div>
+        <div class="kv"><span class="muted">PhilHealth</span><strong>{{ f.philhealthNo || '—' }}</strong></div>
+        <div class="kv"><span class="muted">Emergency contact</span><strong>{{ f.emergencyContact || '—' }}</strong></div>
+        <div class="kv"><span class="muted">Registered</span><strong>{{ f.createdAt }}</strong></div>
+      </section>
+
+      <section class="card block">
+        <div class="head">
+          <div class="eyebrow-label">Members ({{ members().length }})</div>
+          <ion-button size="small" shape="round" (click)="addMember()">+ Add member</ion-button>
+        </div>
+        <ion-list lines="none" class="list-card">
+          @for (m of members(); track m.id) {
+            <ion-item button detail="false" (click)="openResident(m.id)">
+              <span class="avatar" slot="start">{{ initials(m) }}</span>
+              <ion-label>
+                <h3>{{ fullName(m) }}</h3>
+                <p>{{ m.relation }} &middot; {{ ageOf(m.birthDate) }} yrs &middot; {{ m.gender }}</p>
+              </ion-label>
+              @if (m.deceased) { <span class="pill muted-pill" slot="end">Deceased</span> }
+            </ion-item>
+          } @empty {
+            <p class="muted none">No members yet.</p>
+          }
+        </ion-list>
+      </section>
+    </div>
+  } @else {
+    <div class="empty-state"><h3>Family not found</h3><p>It may have been deleted.</p></div>
+  }
+</ion-content>

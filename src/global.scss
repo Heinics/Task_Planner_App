@@ -1,0 +1,148 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import '@ionic/angular/css/palettes/dark.system.css';
+
+
+/* ---------- CHIA design system ---------- */
+
+ion-content.app {
+  --background: var(--ion-background-color-step-50, #f4f5fb);
+}
+
+ion-header.hero {
+  background: var(--ion-color-primary);
+  border-radius: 0 0 28px 28px;
+  overflow: hidden;
+
+  &::after { display: none !important; }
+
+  ion-toolbar { --background: transparent; --color: #fff; --border-width: 0; }
+  ion-title { font-weight: 800; letter-spacing: -0.01em; }
+  .eyebrow { padding: 8px 20px 0; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #fff; opacity: 0.85; }
+  .headline { padding: 4px 20px 0; font-size: 30px; font-weight: 800; letter-spacing: -0.02em; color: #fff; margin: 0; }
+  .sub { padding: 6px 20px 24px; font-size: 14px; color: #fff; opacity: 0.9; margin: 0; }
+  ion-searchbar { --background: rgba(255, 255, 255, 0.95); --color: #1b1b3a; --border-radius: 14px; --box-shadow: none; padding: 0 12px 18px; }
+}
+
+.card {
+  background: var(--ion-background-color, #fff);
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(20, 20, 60, 0.06), 0 6px 18px rgba(20, 20, 60, 0.06);
+  border: 1px solid var(--ion-color-step-100, transparent);
+}
+
+.eyebrow-label {
+  font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--ion-color-step-600, #5a5f73);
+}
+
+.muted { color: var(--ion-color-step-600, #5a5f73); }
+
+.pill {
+  display: inline-block; flex: none; padding: 6px 10px; border-radius: 999px;
+  font-size: 12px; font-weight: 700; white-space: nowrap;
+  background: rgba(var(--ion-color-primary-rgb), 0.14); color: var(--ion-color-primary);
+  &.accent { background: var(--ion-color-secondary); color: #1f1300; }
+  &.danger { background: rgba(var(--ion-color-danger-rgb), 0.14); color: var(--ion-color-danger); }
+  &.muted-pill { background: rgba(128, 128, 128, 0.18); color: var(--ion-color-step-600, #5a5f73); }
+}
+
+.avatar {
+  width: 44px; height: 44px; border-radius: 50%; flex: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 800;
+  background: rgba(var(--ion-color-primary-rgb), 0.14); color: var(--ion-color-primary);
+}
+
+ion-fab-button.amber {
+  --background: var(--ion-color-secondary);
+  --color: #1f1300;
+  --border-radius: 20px;
+  --box-shadow: 0 8px 20px rgba(245, 158, 11, 0.45);
+}
+
+ion-input.field, ion-select.field, ion-textarea.field {
+  --border-radius: 12px;
+  --border-color: var(--ion-color-step-300, #c9cde0);
+  --highlight-color-focused: var(--ion-color-primary);
+  margin-bottom: 16px;
+  min-height: 52px;
+}
+
+.form-heading {
+  margin: 8px 0 12px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--ion-color-primary);
+}
+
+.empty-state {
+  text-align: center; padding: 56px 24px; color: var(--ion-color-step-600, #5a5f73);
+  ion-icon { font-size: 64px; margin-bottom: 12px; color: var(--ion-color-primary); }
+  h3 { margin: 0 0 6px; color: var(--ion-text-color); }
+}
+
+.page-pad { padding: 18px 16px 96px; display: flex; flex-direction: column; gap: 16px; }
+
+.list-card { background: transparent; padding: 0; ion-item { --background: transparent; } }
+
+/* Light blue page background in light mode (#EAF4FF); dark mode keeps Ionic's step colors. */
+@media (prefers-color-scheme: light) {
+  ion-content.app { --background: #eaf4ff; }
+}
+
+.pill.ok { background: rgba(var(--ion-color-success-rgb), 0.2); color: #0f7a53; }
+
+ion-list.list {
+  background: transparent; padding: 16px 16px 96px;
+  ion-item.card { --background: transparent; --padding-start: 14px; margin-bottom: 12px; }
+}
+
+.stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.stat {
+  display: flex; flex-direction: column; gap: 2px; padding: 16px; font-size: 13px;
+  .num { font-size: 30px; font-weight: 800; letter-spacing: -0.02em; color: var(--ion-text-color); }
+}
+.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.block { padding: 6px 16px 10px; }
+.block-title { padding: 12px 0 4px; }
+.head { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; }
+.kv {
+  display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; font-size: 14px; text-align: right;
+  & + .kv { border-top: 1px solid var(--ion-color-step-100, #eceef7); }
+  > span:first-child { flex: none; text-align: left; }
+}
+.none { text-align: center; padding: 20px 0; margin: 0; }
+.small { font-size: 13px; }
