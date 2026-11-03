@@ -174,35 +174,5 @@ export class ReportsPage {
     if (v === 'week' || v === 'month' || v === 'custom') this.range.set(v);
   }
 
-  async exportReport() {
-    const q = (s: string) => `"${s.replace(/"/g, '""')}"`;
-    const lines = [
-      `TaskPlanner report,${q(this.rangeLabel())}`,
-      `Total tasks,${this.total()}`,
-      `Completed,${this.completed()}`,
-      `Completion rate,${this.rate()}%`,
-      '',
-      'Title,Due date,Due time,Priority,Category,Status',
-      ...this.inRange().map(t =>
-        [q(t.title), t.dueDate, t.dueTime, t.priority, t.category, this.svc.status(t)].join(','))
-    ];
-    const file = new File([lines.join('\n')], `taskplanner-report-${todayIso()}.csv`, { type: 'text/csv' });
-
-    try {
-      if (navigator.canShare?.({ files: [file] })) {
-        await navigator.share({ files: [file], title: 'TaskPlanner report' });
-        return;
-      }
-      const url = URL.createObjectURL(file);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = file.name;
-      a.click();
-      URL.revokeObjectURL(url);
-      const t = await this.toast.create({ message: 'Report exported as CSV.', duration: 2200 });
-      await t.present();
-    } catch {
-      // Share sheet dismissed by the user: nothing to do.
-    }
-  }
+  
 }

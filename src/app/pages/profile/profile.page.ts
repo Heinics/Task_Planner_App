@@ -28,10 +28,6 @@ export class ProfilePage {
     await t.present();
   }
 
-  loadSample() {
-    this.svc.loadSampleData();
-  }
-
   async clearAll() {
     const a = await this.alert.create({
       header: 'Delete all tasks?',

@@ -47,7 +47,4 @@ export class HomePage {
     this.router.navigate(['/profile']);
   }
 
-  loadSample() {
-    this.svc.loadSampleData();
-  }
 }
