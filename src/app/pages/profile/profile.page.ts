@@ -21,12 +21,36 @@ export class ProfilePage {
 
   readonly initial = computed(() => (this.svc.profile().name.trim().charAt(0) || 'U').toUpperCase());
 
+  // async save() {
+    
+  //   this.svc.saveProfile(this.form);
+  //   this.form = { name: this.svc.profile().name, email: this.svc.profile().email };
+  //   const t = await this.toast.create({ message: 'Profile saved.', duration: 1800 });
+  //   await t.present();
+  // }
   async save() {
-    this.svc.saveProfile(this.form);
-    this.form = { name: this.svc.profile().name, email: this.svc.profile().email };
-    const t = await this.toast.create({ message: 'Profile saved.', duration: 1800 });
-    await t.present();
-  }
+      // ========== ADDED: Email Validation — nothing else changed ==========
+      const emailTrimmed = this.form.email?.trim();
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+      // Only validate if user entered something — allow empty/cleared
+      if (emailTrimmed && !emailRegex.test(emailTrimmed)) {
+        const alert = await this.alert.create({
+          header: 'Invalid Email',
+          message: 'Please enter a valid email address.\nExample: name@domain.com',
+          buttons: ['OK']
+        });
+        await alert.present();
+        return; // STOP — won't save invalid email
+      }
+      // ====================================================================
+
+      // ✅ YOUR ORIGINAL SAVE CODE — EXACTLY AS YOU WROTE IT
+      this.svc.saveProfile(this.form);
+      this.form = { name: this.svc.profile().name, email: this.svc.profile().email };
+      const t = await this.toast.create({ message: 'Profile saved.', duration: 1800 });
+      await t.present();
+    }
 
   async clearAll() {
     const a = await this.alert.create({

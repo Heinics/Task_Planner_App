@@ -2,7 +2,7 @@
 
 .tabs {
   --background: transparent;
-  ion-segment-button { --indicator-color: var(--ion-color-primary); --color-checked: var(--ion-color-primary); text-transform: none; min-height: 36px; font-size: 13px; }
+  ion-segment-button { --indicator-color: var(--ion-color-primary); --color-checked: var(--ion-color-primary); text-transform: none; min-height: 36px; font-size: 13px; color:black}
 }
 
 .chip-row { display: flex; align-items: center; justify-content: space-between; }
@@ -10,7 +10,7 @@
 ion-fab-button.extended {
   width: auto;
   --border-radius: 28px;
-  &::part(native) { padding: 0 20px 0 14px; gap: 6px; width: auto; height: 52px; }
+  &::part(native) { padding: 0 20px 0 14px; gap: 6px; width: 110px; height: 52px; }
   span { font-size: 14px; font-weight: 600; margin-left: 4px; }
   ion-icon { font-size: 22px; }
 }
